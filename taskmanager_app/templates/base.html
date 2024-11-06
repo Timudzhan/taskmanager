@@ -1,0 +1,77 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="stylesheet" href="{% static './css/style.css' %}">
+</head>
+<body>
+    <header class="header">
+        <div class="container is-header">
+            <button class="menu-btn" onclick="menulistAction()">
+                <img src="{% static './images/three-dots.svg' %}" alt="menu">
+            </button>            
+        </div>
+    </header>
+    <main>
+        <div id="menu-list" style="display: none">
+            <div class="container is-list">
+                <ul class="menu-list">
+                    <li class="menu-list__item">
+                        <a href="{% url 'home_page' %}" class="menu-list__link">
+                            <img src="{% static './images/home.svg' %}" alt="Home">
+                            <span>Главная</span>
+                        </a>
+                    </li>
+                    <li class="menu-list__item">
+                        <a href="{% url 'tasks_page'%}" class="menu-list__link">
+                            <img src="{% static './images/task.svg' %}" alt="Task">
+                            <span>Задачи</span>
+                        </a>
+                    </li>
+                    <li class="menu-list__item">
+                        <a href="{% url 'employees_page' %}" class="menu-list__link">
+                            <img src="{% static './images/employees.svg' %}" alt="Employees">
+                            <span>Сотрудники</span>
+                        </a>
+                    </li>
+                    <li class="menu-list__item">
+                        <a href="{% url 'rules_page' %}" class="menu-list__link">
+                            <img src="{% static './images/kodecs.svg' %}" alt="Kodecs">
+                            <span>Правила</span>
+                        </a>
+                    </li>
+                    {% if not user.is_authenticated %}
+                    <li class="menu-list__item">
+                        <a href="{% url 'sign_up_page' %}" class="menu-list__link">
+                            <img src="{% static './images/signup.svg' %}" alt="Signup">
+                            <span>Регистрация</span>
+                        </a>
+                    </li>
+                    <li class="menu-list__item">
+                        <a href="{% url 'login_page' %}" class="menu-list__link">
+                            <img src="{% static './images/login.svg' %}" alt="Login">
+                            <span>Вход</span>
+                        </a>
+                    </li>
+                    {% else %}
+                    <li class="menu-list__item">
+                        <a href="{% url 'logout_action' %}" class="menu-list__link">
+                            <img src="{% static './images/logout.svg' %}" alt="Logout">
+                            <span>Выход</span>
+                        </a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+        {% block content %}
+        {% endblock%}
+    </main>
+
+
+    <script src="{% static '/js/script.js' %}"></script>
+</body>
+</html>

@@ -1,0 +1,52 @@
+{% extends 'base.html'%}
+{% load static %}
+
+{% block title %}Сотрудники{% endblock %}
+
+{% block content %}
+{% if user.is_authenticated %}
+<section class="employees">
+    <div class="container">
+        <h2 class="title">Сотрудники</h2>
+        <div class="employees-list">
+            {% for employee in employees%}
+            <div class="employee-card">
+                <div class="person">
+                    <img src="{%static './images/profile-photo.png' %}" alt="employee">
+                    <div class="who">
+                        <p> {{ employee.title}}</p>
+                        <p>{{ employee.post}}</p>
+                    </div>
+                </div>
+                <div class="person-info">
+                    <div class="ranking">
+                        <img src="{% static './images/ranking.svg' %}" alt="ranking">
+                        <p>{{ employee.ranking}}</p>
+                    </div>
+                    <div class="num-tasks">
+                        <img src="{% static './images/card-checklist.svg' %}" alt="checklist">
+                        <p>{{employee.checklist}}</p>
+                    </div>
+                    <div class="experience">
+                        <img src="{% static './images/person-lines.svg' %}" alt="experiencs">
+                        <p>{{employee.experiences}}</p>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% else %}
+<section class="access">
+    <div class="container">
+        <h1 class="title">Вы анонимный пользователь</h1>
+        <p class="dark-text">Чтобы работать с приложением, Вам нужно будет пройти регистрацию и авторизацию</p>
+        <div class="access-action">
+            <a href="{% url 'sign_up_page' %}" class="btn-success">Регистрация</a>
+            <a href="{% url 'login_page' %}" class="btn-success">Вход</a>
+        </div>
+    </div>
+</section>
+{% endif %}
+{%endblock%}

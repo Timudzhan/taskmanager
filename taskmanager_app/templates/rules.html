@@ -1,0 +1,33 @@
+{% extends 'base.html'%}
+{% load static %}
+{% block title %}Правила{% endblock %}
+
+{% block content %}
+{% if user.is_authenticated %}
+<section class="rules">
+    <div class="container">
+        <h2 class="title">Правила</h2>
+        <img src="{% static './images/computer.png' %}" alt="computer">
+        <div class="rules-list">
+            {% for rule in rules %}
+            <div class="rules-card">
+                <p class="post-task__content">{{rule.description}}
+                </p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% else %}
+<section class="access">
+    <div class="container">
+        <h1 class="title">Вы анонимный пользователь</h1>
+        <p class="dark-text">Чтобы работать с приложением, Вам нужно будет пройти регистрацию и авторизацию</p>
+        <div class="access-action">
+            <a href="{% url 'sign_up_page' %}" class="btn-success">Регистрация</a>
+            <a href="{% url 'login_page' %}" class="btn-success">Вход</a>
+        </div>
+    </div>
+</section>
+{% endif %}
+{%endblock%}

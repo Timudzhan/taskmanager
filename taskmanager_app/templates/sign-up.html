@@ -1,0 +1,17 @@
+{% extends 'base.html'%}
+
+{% block title %}Регистрация{% endblock %}
+
+{% block content %}
+<section class="auth">
+    <div class="container is-registration">
+        <h2 class="title">Регистрация</h2>
+        <form method="post">
+            {% csrf_token %}
+            {{form }}
+            <button class="btn-success is-done">Зарегистрироваться</button>
+        </form>
+        <p class="help">Уже есть аккаунт? <a href="{% url 'login_page' %}" class="help-link">Войти</a></p>
+    </div>
+</section>
+{%endblock%}

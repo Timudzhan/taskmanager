@@ -1,0 +1,78 @@
+{% extends 'base.html'%}
+
+{% block title %}Главная страница{% endblock %}
+
+{% block content %}
+<section class="categories">
+    <div class="container">
+        <h2 class="title">Сортировать по:</h2>
+        <div class="categories-list">
+            <a href="{% url 'tasks_page' %}" class="category-item">Все</a>
+            <a href="{% url 'tasks_by_category_page' %}" class="category-item">В работе</a>
+            <a href="{% url 'off_tasks' %}" class="category-item">Завершено</a>
+
+        </div>
+    </div>
+</section>
+<section class="tasks">
+    <div class="container">
+        <h2 class="title">Новые задачи</h2>
+        <div class="tasks-list">
+            {% for task in tasks %}
+                {% if task.difficulty == "easy" %}
+                <div class="task-card is-easy">
+                    <div class="task-card__info">
+                        <div class="task-card__title">{{task.title}}</div>
+                        <div class="task-card__complexity ">{{task.difficulty}}</div>
+                        <div class="task-card__title">{{task.customer}}</div>
+                        <div class="task-card__deadline">{{task.deadline}}</div>    
+                    </div>
+                    <div class="task-card__buttons">
+                        <a href="{% url 'task_detail_page' pk=task.pk %}" class="task-card__link">Подробнее</a>
+                        {% if not task.is_active %}
+                        <div class="status is-done">В работе</div>
+                        {% else %}
+                        <div class="status">Завершено</div>
+                        {% endif %}                    </div>
+                </div>
+                {% elif task.difficulty == "medium" %}
+                <div class="task-card is-medium">
+                    <div class="task-card__info">
+                        <div class="task-card__title">{{task.title}}</div>
+                        <div class="task-card__complexity ">{{task.difficulty}}</div>
+                        <div class="task-card__title">{{task.customer}}</div>
+                        <div class="task-card__deadline">{{task.deadline}}</div>    
+                    </div>
+                    <div class="task-card__buttons">
+                        <a href="{% url 'task_detail_page' pk=task.pk %}" class="task-card__link">Подробнее</a>
+                        {% if not task.is_active %}
+                        <div class="status is-done">В работе</div>
+                        {% else %}
+                        <div class="status">Завершено</div>
+                        {% endif %}
+                    </div>
+                </div>
+                {% else %}
+                <div class="task-card is-hard">
+                    <div class="task-card__info">
+                        <div class="task-card__title">{{task.title}}</div>
+                        <div class="task-card__complexity ">{{task.difficulty}}</div>
+                        <div class="task-card__title">{{task.customer}}</div>
+                        <div class="task-card__deadline">{{task.deadline}}</div>    
+                    </div>
+                    <div class="task-card__buttons">
+                        <a href="{% url 'task_detail_page' pk=task.pk %}" class="task-card__link">Подробнее</a>
+                        {% if not task.is_active %}
+                        <div class="status is-done">В работе</div>
+                        {% else %}
+                        <div class="status">Завершено</div>
+                        {% endif %}
+                    </div>
+                </div>
+                {% endif %}
+
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{%endblock%}

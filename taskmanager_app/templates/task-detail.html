@@ -1,0 +1,44 @@
+
+{% extends 'base.html'%}
+
+{% block title %}{{task.title}}{% endblock %}
+
+{% block content %}
+{% if user.is_authenticated %}
+<section class="post-task">
+    <div class="container">
+        <h1 class="title">{{ task.title }}</h1>
+        <h3 class="post-task__about">Заказчик: <span>{{task.customer }}</span></h3>
+        <h3 class="post-task__about">Дедлайн: <span>{{task.deadline }}</span></h3>
+        <h3 class="post-task__about">Сложность: <span>{{task.difficulty }}</span></h3>
+        <p class="post-task__content"><strong>Описание: </strong>{{task.description}}</p>
+        <p class="post-task__content"><strong>Условия: </strong>{{task.condition}}</p>
+        <div class="post-task__contacts">
+            <h3 class="post-task__about">Контакты:</h3>
+            <ul class="post-task__address">
+                <li>{{task.address}}</li>
+                <li>Телефон: {{task.phone }}</li>
+                <li>Email: {{task.email}}</li>
+            </ul>
+        </div>
+        <p class="post-task__content"><strong>Дата публикации: </strong>{{task.created_at|date:"d.m.Y"}}</p>
+        <form action="{% url 'mark_task_completed' task.pk %}" method="post">
+            {% csrf_token %}
+            <button type="submit" class="btn-success is-allwidth">Отметить как выполнено</button>
+        </form>
+        
+    </div>
+</section>
+{% else %}
+<section class="access">
+    <div class="container">
+        <h1 class="title">Вы анонимный пользователь</h1>
+        <p class="dark-text">Чтобы работать с приложением, Вам нужно будет пройти регистрацию и авторизацию</p>
+        <div class="access-action">
+            <a href="{% url 'sign_up_page' %}" class="dark-button">Регистрация</a>
+            <a href="{% url 'login_page' %}" class="dark-button">Вход</a>
+        </div>
+    </div>
+</section>
+{% endif %}
+{%endblock%}
